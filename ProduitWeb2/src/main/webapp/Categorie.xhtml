@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Gestion des Catégories</title>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #333333;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #1e1e1e;
+        }
+        td {
+            background-color: #1c1c1c;
+        }
+        input, select, button {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right:5px;
+        }
+        input[type="text"] {
+            width: 90%;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #555555;
+        }
+        nav {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestion des Catégories</h1>
+    
+    <h:form>
+        <table>
+            <tr>
+                <td>Code :</td>
+                <td><h:inputText value="#{categorieBean.code}" /></td>
+            </tr>
+            <tr>
+                <td>Libelle :</td>
+                <td><h:inputText value="#{categorieBean.libelle}" /></td>
+            </tr>
+            <tr>
+                <td>Description :</td>
+                <td><h:inputText value="#{categorieBean.description}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h:commandButton value="Ajouter" action="#{categorieBean.addCategorie()}" />
+                    <h:commandButton value="Modifier" action="#{categorieBean.editCategorie()}" />
+                    <h:commandButton value="Rechercher" action="#{categorieBean.getCategorie()}" />
+                </td>
+            </tr>
+        </table>
+    </h:form>
+    
+    <h2>Liste des Catégories</h2>
+    <h:dataTable value="#{categorieBean.listCategories()}" var="ct" border="1">
+        <h:column>
+            <f:facet name="header">Code</f:facet>
+            #{ct.code}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Libelle</f:facet>
+            #{ct.libelle}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Description</f:facet>
+            #{ct.description}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Actions</f:facet>
+            <h:form>
+                <h:commandButton value="Supprimer" action="#{categorieBean.deleteCategorie(ct.code)}" >
+                <f:setPropertyActionListener value="#{ct.code}" target="#{categorieBean.code}"></f:setPropertyActionListener>
+                </h:commandButton>
+            </h:form>
+        </h:column>
+    </h:dataTable>
+
+    <nav>
+        <h:link value="Go to Produits" outcome="Produit.xhtml" />
+    </nav>
+</body>
+</html>

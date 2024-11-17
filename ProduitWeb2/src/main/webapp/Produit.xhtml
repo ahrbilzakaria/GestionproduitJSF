@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Gestion des Produits</title>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #333333;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #1e1e1e;
+        }
+        td {
+            background-color: #1c1c1c;
+        }
+        input, select, button {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right:5px;
+        }
+        select{
+        min-width: 20%}
+        input[type="text"] {
+            width: 90%;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #555555;
+        }
+        nav {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestion des Produits</h1>
+    
+    <h:form>
+        <table>
+            <tr>
+                <td>Code :</td>
+                <td><h:inputText value="#{produitBean.code}" /></td>
+            </tr>
+            <tr>
+                <td>Designation :</td>
+                <td><h:inputText value="#{produitBean.designation}" /></td>
+            </tr>
+            <tr>
+                <td>Quantité :</td>
+                <td><h:inputText value="#{produitBean.quantite}" /></td>
+            </tr>
+             <tr>
+                <td>Prix :</td>
+                <td><h:inputText value="#{produitBean.prix}" /></td>
+            </tr>
+             <tr>
+                <td>Categorie :</td>
+                <td>
+                        <h:selectOneMenu value="#{produitBean.categorie}" >
+                        <f:selectItems value="#{categorieBean.listCategories()}" var="ct" itemValue="#{ct.libelle}" itemLabel="#{ct.libelle}">
+                        </f:selectItems>
+                        </h:selectOneMenu>
+                    </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h:commandButton value="Ajouter" action="#{produitBean.addProduit()}" />
+                    <h:commandButton value="Modifier" action="#{produitBean.editProduit()}" />
+                    <h:commandButton value="Rechercher" action="#{produitBean.getProduit()}" />
+                    <h:commandButton value="+ Quantité" action="#{produitBean.addQuantity()}" />
+                    <h:commandButton value="- Quantité" action="#{produitBean.removeQuantity()}" />
+                </td>
+            </tr>
+        </table>
+    </h:form>
+    
+    <h2>Liste des Produits</h2>
+    <h:dataTable value="#{produitBean.listProduits()}" var="pr" border="1">
+        <h:column>
+            <f:facet name="header">Code</f:facet>
+            #{pr.code}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Libelle</f:facet>
+            #{pr.libelle}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Quantité</f:facet>
+            #{pr.quantite}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Prix</f:facet>
+            #{pr.prix}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Actions</f:facet>
+            <h:form>
+                <h:commandButton value="Supprimer" action="#{produitBean.deleteProduit(pr.code)}" />
+            </h:form>
+        </h:column>
+    </h:dataTable>
+
+    <nav>
+        <h:link value="Go to Categories" outcome="Categorie.xhtml" />
+    </nav>
+</body>
+</html>
